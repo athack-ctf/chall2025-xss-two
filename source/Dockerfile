@@ -1,33 +1,40 @@
-#########################################################################################################################
-# TODO: REPLACE THE CONTENT OF THIS FILE WITH YOUR OWN.
-#########################################################################################################################
+# Start from the official Node.js image
+FROM node:18-slim
 
-# Use the official Python base image
-FROM python:3.10-slim
+# Install necessary dependencies for Puppeteer
+RUN apt-get update && \
+    apt-get install -y wget gnupg && \
+    apt-get install -y --no-install-recommends \
+        ca-certificates \
+        fonts-liberation \
+        libasound2 \
+        libatk1.0-0 \
+        libcairo2 \
+        libcups2 \
+        libdbus-1-3 \
+        libdrm2 \
+        libgbm1 \
+        libgdk-pixbuf2.0-0 \
+        libglib2.0-0 \
+        libgtk-3-0 \
+        libnspr4 \
+        libnss3 \
+        libx11-xcb1 \
+        libxcomposite1 \
+        libxdamage1 \
+        libxext6 \
+        libxfixes3 \
+        libxrandr2 \
+        xdg-utils \
+        xvfb && \
+    rm -rf /var/lib/apt/lists/*
 
-# Set the working directory
+# Set working directory
 WORKDIR /chall
 
-# Installing Flask
-RUN pip install Flask
+COPY chall/ .
 
-# Create the example chall (chall.py)
-RUN echo "from flask import Flask\n\
-chall = Flask(__name__)\n\
-\n\
-@chall.route('/')\n\
-def hello():\n\
-    return 'Hello @Hack 2025!'\n\
-\n\
-if __name__ == '__main__':\n\
-    chall.run(host='0.0.0.0')" > chall.py
+RUN npm install
 
-# Set environment vars
-ENV FLASK_APP=chall.py
-ENV FLASK_RUN_PORT=2025
-
-# Expose the port that the chall will run on
-EXPOSE 2025
-
-# Run the chall
-CMD ["flask", "run", "--host=0.0.0.0"]
+# Run the Puppeteer chall script
+CMD ["npm", "start"]

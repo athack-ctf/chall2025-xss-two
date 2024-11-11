@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/pico.slate.min.css">
+    <link rel="stylesheet" href="/styles.css">
+    <title>XSS - 1</title>
+</head>
+<body>
+<div class="main-container">
+    <h1>XSS - 1</h1>
+    <p>Craft a reflected XSS for <a href="/visit-me"><span id="baseUrl"></span>visit-me</a> that logs <b
+            style="font-family: monospace;">"XSS!!!"</b>
+        to the console, and submit it in the form below.
+        <br>
+        We will check it if your payload worked, and give you back the flag.</p>
+    <p></p>
+    <div class="form-container">
+        <form action="/submit-url" method="POST">
+            <label for="urlInput"></label>
+            <input id="urlInput" type="url" name="url" placeholder="" required>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</div>
+
+</body>
+<script>
+    window.onload = () => {
+        document.getElementById("baseUrl").textContent = window.location.href;
+        document.getElementById("urlInput").placeholder = `${window.location.href}visit-me`;
+    };
+</script>
+</html>
