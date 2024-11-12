@@ -1,6 +1,7 @@
 services:
   chall:
     build: .
-    image: chall2025-xss-1
+    image: chall2025-xss-3
+    hostname: xss-3
     ports:
       - "2025:2025"

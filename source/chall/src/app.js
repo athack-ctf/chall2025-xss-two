@@ -2,9 +2,12 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const {isValidHttpUrl, validatePagePath, swapUrlComponents} = require("./utils");
+const {visitPageAndCheckForProof} = require("./bot");
 
 // Port 2025
 const port = 2025;
+const timeout = 2000;
+const proof = "I_FOUND_AN_XSS!!!";
 
 // Serve static files from the "public" folder
 app.use(express.static(path.join(__dirname, 'public')));
@@ -17,8 +20,8 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'private', 'welcome.html'));
 });
 
-app.get('/visit-me', (req, res) => {
-    res.sendFile(path.join(__dirname, 'private', 'visit-me.html'));
+app.get('/calculator', (req, res) => {
+    res.sendFile(path.join(__dirname, 'private', 'calcutor.html'));
 });
 
 app.post('/submit-url', async (req, res) => {
@@ -32,7 +35,7 @@ app.post('/submit-url', async (req, res) => {
     }
 
     // Validate page path
-    if (!validatePagePath(url, "/visit-me")) {
+    if (!validatePagePath(url, "/calculator")) {
         res.sendFile(path.join(__dirname, 'private', 'no-flag.html'));
         return;
     }
@@ -40,8 +43,16 @@ app.post('/submit-url', async (req, res) => {
     // Fixing url (in case it points somewhere else)
     const safeUrl = swapUrlComponents(url, "http", "localhost", port);
 
-    // TODO: Use a headless browser to check if the payload got executed
 
+    // Check if the XSS payload worked
+    const xssPayloadWorked = await visitPageAndCheckForProof(safeUrl, proof, timeout);
+
+    if (!xssPayloadWorked) {
+        res.sendFile(path.join(__dirname, 'private', 'no-flag.html'));
+        return;
+    }
+
+    // Return the flag page
     res.sendFile(path.join(__dirname, 'private', 'flag.html'));
 });
 

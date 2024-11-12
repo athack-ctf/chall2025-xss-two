@@ -1,26 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/pico.slate.min.css">
+    <meta name="color-scheme" content="light">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
     <link rel="stylesheet" href="/styles.css">
-    <title>XSS - 1</title>
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <title>XSS - 3</title>
 </head>
 <body>
 <div class="main-container">
-    <h1>XSS - 1</h1>
-    <p>Craft a reflected XSS for <a href="/visit-me"><span id="baseUrl"></span>visit-me</a> that logs <b
-            style="font-family: monospace;">"XSS!!!"</b>
-        to the console, and submit it in the form below.
+    <h1>XSS - 3</h1>
+    <p>Craft an XSS-loaded url for <a href="/calculator" target="_blank"><span id="baseUrl"></span>calculator</a> that
+        logs <code><b>I_FOUND_AN_XSS!!!</b></code>
+        to the console, and submit it for verification.
         <br>
-        We will check it if your payload worked, and give you back the flag.</p>
+        If your payload works we will give you the 🚩</p>
     <p></p>
     <div class="form-container">
-        <form action="/submit-url" method="POST">
+        <form action="/submit-url" method="POST" onsubmit="onSubmit()">
             <label for="urlInput"></label>
             <input id="urlInput" type="url" name="url" placeholder="" required>
-            <input type="submit" value="Submit">
+            <button id="submitButton" type="submit">Submit</button>
         </form>
     </div>
 </div>
@@ -29,7 +31,13 @@
 <script>
     window.onload = () => {
         document.getElementById("baseUrl").textContent = window.location.href;
-        document.getElementById("urlInput").placeholder = `${window.location.href}visit-me`;
+        document.getElementById("urlInput").placeholder = `${window.location.href}calculator`;
     };
+
+    function onSubmit() {
+        const button = document.getElementById('submitButton');
+        button.disabled = true;
+        button.innerHTML = "Submitting...";
+    }
 </script>
 </html>

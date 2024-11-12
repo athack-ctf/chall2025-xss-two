@@ -1,13 +1,34 @@
-// chall.js
 const puppeteer = require('puppeteer');
 
-(async () => {
+const sleep = ms => new Promise(res => setTimeout(res, ms));
+
+async function visitPageAndCheckForProof(url, proofString, timeout = 2000) {
     const browser = await puppeteer.launch({
-        headless: true, // Set to false for debugging
-        args: ['--no-sandbox', '--disable-setuid-sandbox']
+        executablePath: '/usr/bin/google-chrome', args: ['--disable-web-security', '--no-sandbox'],
     });
+
     const page = await browser.newPage();
-    await page.goto(`https://google.com`);
-    console.log('Visited example.html');
+
+    // Create a variable to track if proofString is logged
+    let proofFound = false;
+
+    // Listen for console events on the page
+    page.on('console', (msg) => {
+        if (msg.text() === proofString) {
+            proofFound = true;
+        }
+    });
+
+    // Visit the provided URL
+    await page.goto(url);
+
+    // Wait for the specified timeout to ensure console logs are captured
+    await sleep(timeout);
+
+    // Close the browser
     await browser.close();
-})();
+
+    return proofFound;
+}
+
+module.exports = {visitPageAndCheckForProof}
