@@ -1,7 +1,14 @@
+version: '3.8'
+
 services:
-  chall:
+  xss-3:
     build: .
-    image: chall2025-xss-3
+    image: athack-ctf/chall2025-xss-3
     hostname: xss-3
     ports:
       - "2025:2025"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.12"
+          memory: "300m"

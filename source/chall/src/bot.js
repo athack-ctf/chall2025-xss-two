@@ -4,7 +4,22 @@ const sleep = ms => new Promise(res => setTimeout(res, ms));
 
 async function visitPageAndCheckForProof(url, proofString, timeout = 2000) {
     const browser = await puppeteer.launch({
-        executablePath: '/usr/bin/google-chrome', args: ['--disable-web-security', '--no-sandbox'],
+        executablePath: '/usr/bin/google-chrome',
+        args: [
+            // For the chall
+            '--disable-web-security',
+            '--incognito',
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            // For resource optimization
+            '--js-flags="--max-old-space-size=300"',
+            '--disable-dev-shm-usage',
+            '--single-process',
+            '--disable-gpu',
+            '--disable-background-timer-throttling',
+            '--disable-renderer-backgrounding',
+            '--memory-pressure-off'
+        ],
     });
 
     const page = await browser.newPage();
