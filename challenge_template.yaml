@@ -1,0 +1,29 @@
+name: "XSS Two"
+author: ""
+category: <Web>
+description: |
+    Show us how you can make websites behave badly, even when we try to make it a bit harder for you.
+
+    [Start your challenge instance](https://instancer.athackctf.com/chall2025-xss-two/create)
+    
+value: 0
+
+# Let's put the challenges as standard for now and we can script to change
+type: standard
+
+
+# Flags specify answers that your challenge use. You should generally provide at least one.
+flags:
+  - type: "static"
+    content: "ATHACKCTF{R3g3X5S_IS_N0T_EN0uGH_0x7F}"
+    data: "case_insensitive"
+
+
+# Available: beginner, interac
+tags:
+    - beginner
+
+# Put hidden by default
+state: hidden
+
+version: "0.1"
