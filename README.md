@@ -1,4 +1,4 @@
-# Chall - XSS - 3
+# Chall - XSS Two
 
 > Basic XSS injection challenge meant for the beginner track: XSS - 3
 
