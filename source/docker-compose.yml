@@ -1,10 +1,10 @@
 version: '3.8'
 
 services:
-  xss-3:
+  xss-two:
     build: .
-    image: athack-ctf/chall2025-xss-3
-    hostname: xss-3
+    image: athack-ctf/chall2025-xss-two:latest
+    hostname: xss-two
     ports:
       - "2025:2025"
     deploy:

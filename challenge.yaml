@@ -1,0 +1,22 @@
+name: "XSS Two"
+author: "Anis"
+category: Web
+description: |
+    Show us how you can make websites behave badly, even when we try to make it a bit harder for you.
+    
+value: 50
+
+type: standard
+
+flags:
+  - type: "static"
+    content: "ATHACKCTF{R3g3X5S_IS_N0T_EN0uGH_0x7F}"
+    data: "case_insensitive"
+
+tags:
+    - beginner
+    - http
+
+state: visible
+
+version: "0.1"
