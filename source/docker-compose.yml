@@ -1,14 +1,13 @@
-version: '3.8'
-
 services:
   xss-two:
     build: .
-    image: athack-ctf/chall2025-xss-two:latest
-    hostname: xss-two
-    ports:
-      - "2025:2025"
     deploy:
       resources:
         limits:
-          cpus: "0.12"
-          memory: "300m"
+          cpus: '0.12'
+          memory: 300m
+    hostname: xss-two
+    image: athack-ctf/chall2025-xss-two:latest
+    ports:
+    - 52053:2025
+version: '3.8'
