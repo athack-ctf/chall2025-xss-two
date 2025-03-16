@@ -1,1 +1,0 @@
-Show us how you can make websites behave badly, even when we try to make it a bit harder for you.
